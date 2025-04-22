@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Playlist</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<h1>Playlist</h1>
+
+<h2>Current Songs</h2>
+<table style="margin: 20px auto; max-width: 600px; border-collapse: collapse;">
+    <thead>
+    <tr>
+        <th style="border-bottom: 2px solid #ccc; padding: 10px;">Title</th>
+        <th style="border-bottom: 2px solid #ccc; padding: 10px;">Artist</th>
+        <th style="border-bottom: 2px solid #ccc; padding: 10px;">Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${playlist.songs}">
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;" th:text="${track.title}"></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;" th:text="${track.artist}"></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;" th:text="${track.genre}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Operations</h2>
+<ul>
+    <li th:each="msg : ${playlist.messages}" th:text="${msg}"></li>
+</ul>
+
+<form th:action="@{/playlist}" th:object="${song}" method="post">
+    <label>Title: <input type="text" th:field="*{title}" /></label><br/>
+    <label>Artist: <input type="text" th:field="*{artist}" /></label><br/>
+    <label>Genre: <input type="text" th:field="*{genre}" /></label><br/>
+    <button type="submit" style="background: #28a745;">Add Song</button>
+</form>
+
+<form th:action="@{/playlist/update/__PLACEHOLDER__}" th:object="${song}" method="post">
+    <label>Song to update \(title\): <input type="text" name="songName" /></label><br/>
+    <label>New Title: <input type="text" th:field="*{title}" /></label><br/>
+    <label>New Artist: <input type="text" th:field="*{artist}" /></label><br/>
+    <label>New Genre: <input type="text" th:field="*{genre}" /></label><br/>
+    <button type="submit" style="background: #ffc107;">Update Song</button>
+</form>
+
+<form th:action="@{/playlist/delete/__PLACEHOLDER__}" method="post">
+    <label>Song to delete \(title\): <input type="text" name="songName" /></label><br/>
+    <button type="submit" style="background: #dc3545;">Delete Song</button>
+</form>
+</body>
+</html>
